@@ -1,0 +1,17 @@
+     if (idyn.eq.1.) then
+         ubcxx=ubcx
+         ubcyy=ubcy
+         ubczz=ubcz
+    elseif (idyn.eq.2.) then
+         ubcxx = 2* pi * 2 * ubcx * cos (2* pi * 2 *(t-ifirst*dt))
+         ubcyy = 2* pi * 2 * ubcy * cos (2* pi * 2 *(t-ifirst*dt))
+         ubczz = 2* pi * 2 * ubcz * cos (2* pi * 2 *(t-ifirst*dt))
+    elseif (idyn.eq.3.) then 
+         ubcxx = 2* pi * 2 * ubcx * cos (2* pi * 2 *(t-ifirst*dt))
+         ubcyy = 2* pi * 2 * ubcy * cos (2* pi * 2 *(t-ifirst*dt))
+         ubczz = 2* pi * 2 * ubcz * cos (2* pi * 2 *(t-ifirst*dt))
+     elseif (idyn.eq.4.) then 
+         ubcxx = 2* pi * 2 * ubcx * cos (2* pi * 2 *(t-ifirst*dt))
+         ubcyy = 2* pi * 2 * ubcy * cos (2* pi * 2 *(t-ifirst*dt))
+         ubczz = 2* pi * 2 * ubcz * cos (2* pi * 2 *(t-ifirst*dt))
+     endif
