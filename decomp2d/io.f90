@@ -35,11 +35,11 @@ module decomp_2d_io
 #ifndef ADIOS2
   integer, dimension(MAX_IOH), save :: fh_registry
   logical, dimension(MAX_IOH), target, save :: fh_live
-  character(len=80), dimension(MAX_IOH), target, save :: fh_names
+  character(len=1024), dimension(MAX_IOH), target, save :: fh_names
   integer(kind=MPI_OFFSET_KIND), dimension(MAX_IOH), save :: fh_disp
 #else
   type(adios2_adios) :: adios
-  character(len=80), dimension(MAX_IOH), target, save :: engine_names
+  character(len=1024), dimension(MAX_IOH), target, save :: engine_names
   logical, dimension(MAX_IOH), target, save :: engine_live
   type(adios2_engine), dimension(MAX_IOH), save :: engine_registry
 #endif
@@ -1169,6 +1169,9 @@ contains
        deallocate(varsingle)
     end if
 #else
+    if (idx < 1) then
+       print *, "ERROR: failed to find engine for ", io_name, " ", dirname
+    end if
     if (.not. engine_live(idx)) then
        print *, "ERROR: Engine is not live!"
        stop
@@ -1599,7 +1602,7 @@ contains
     integer, intent(in) :: mode
 
     logical, dimension(:), pointer :: live_ptrh
-    character(len=80), dimension(:), pointer :: names_ptr
+    character(len=1024), dimension(:), pointer :: names_ptr
     character(len=(len(io_name)+len(io_sep)+len(io_dir))) :: full_name
     
     integer :: idx, ierror
@@ -1696,7 +1699,7 @@ contains
 
     character(len=*), intent(in) :: io_name, io_dir
     
-    character(len=80), dimension(:), pointer :: names_ptr
+    character(len=1024), dimension(:), pointer :: names_ptr
     logical, dimension(:), pointer :: live_ptrh
     integer :: idx, ierror
 
@@ -1780,7 +1783,7 @@ contains
     integer :: idx
     logical :: found
 
-    character(len=80), dimension(:), pointer :: names_ptr
+    character(len=1024), dimension(:), pointer :: names_ptr
 
 #ifndef ADIOS2
     names_ptr => fh_names
@@ -1830,7 +1833,7 @@ contains
        print *, "- DIR:", io_dir
        stop
     endif
-    write(gen_iodir_name, "(A,A)") io_dir, trim(ext)
+    write(gen_iodir_name, "(A,A)") trim(io_dir), trim(ext)
 #endif
     
   end function gen_iodir_name
