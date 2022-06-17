@@ -546,50 +546,7 @@ do iv=1,nvol
                    !call system("cp forces.dat " //filename)
         !  endif
        !endif
-       
-!===================write the dynamic responses
-if (imove(iv) .eq.1) then
-if (idyn (iv).eq.1) then
-  if (nrank .eq. 0) then
-    write(filelist,"(i2)") iv
-    open(48, file="Pre_velocity-"//trim(AdjustL(filelist))//".dat",position='Append', mode ='write') 
-    write(48,*) t,ubcx,ubcy!ax(iv), ay(iv)
-    call flush(48)
-  endif
-endif
 
-if (idyn (iv).eq.2) then
-  if (nrank .eq. 0) then
-    write(filelist,"(i2)") iv
-    open(58, file="Pre_velocity-"//trim(AdjustL(filelist))//".dat",position='Append', mode ='write') 
-    write(58,*) t,ubcx,ubcy!ax(iv), ay(iv)
-    call flush(58)
-  endif
-endif
-
-  
-if (idyn (iv).eq.3) then
-  if (nrank .eq. 0) then
-    write(filelist,"(i2)") iv
-    open(68, file="1-DOFResponses-"//trim(AdjustL(filelist))//".dat", position='Append',mode ='write') 
-    write(68,*) t,n_body_centroid (iv,2), n_body_vel(iv,2)
-    call flush(68)
-  endif
-endif
-  
-if (idyn(iv).eq.4) then
-  if (nrank .eq. 0) then
-    write(filelist,"(i2)") iv
-    open(78, file="2-DOFResponsesx-"//trim(AdjustL(filelist))//".dat", position='Append',mode ='write') 
-    write(78,*) t,n_body_centroid (iv,1), n_body_vel(iv,1)
-    call flush(78)
-    open(88, file="2-DOFResponsesy-"//trim(AdjustL(filelist))//".dat",position='Append', mode ='write') 
-    write(88,*) t,n_body_centroid (iv,2), n_body_vel(iv,2)
-    call flush(88)
-  endif
-endif
-!===================write the dynamic responses 
-endif
 enddo
 
     do k = 1, xsize(3)
